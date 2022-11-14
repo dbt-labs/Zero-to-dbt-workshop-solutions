@@ -34,4 +34,4 @@ models:
   zero_to_dbt:
     # Applies to all files under models/marts/
     marts:
-      +materialized: table
+      +materialized: view
