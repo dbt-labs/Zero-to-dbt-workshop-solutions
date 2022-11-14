@@ -7,7 +7,7 @@ models:
         tests:
           - unique
           - not_null
-      - name: region
+      - name: region_name
         tests:
           - accepted_values:
               values: ['AFRICA','MIDDLE EAST','ASIA','AMERICA', 'EUROPE']
