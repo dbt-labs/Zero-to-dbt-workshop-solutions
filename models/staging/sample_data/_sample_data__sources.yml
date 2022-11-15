@@ -8,6 +8,7 @@ sources:
       - name: customer
         columns:
           - name: c_custkey
+            description: Unique key corresponding to each individual customer. Primary key of the customer source.
             tests:
               - unique
               - not_null
