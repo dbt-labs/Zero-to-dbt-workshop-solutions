@@ -2,33 +2,55 @@ version: 2
 
 models:
   - name: int_order_items
+    description: Intermediate model where we calculate item price, discounts and tax. This model is at the order item level.
     tags:
       - output_table_type|orders
     columns:
       - name: order_key
+        description: foreign key for orders
       - name: customer_key
+        description: foreign key for customers
       - name: part_key
+        description: foreign key for part
       - name: supplier_key
+        description: foreign key for suppliers
       - name: order_date
+        description: date of the order
       - name: order_status_code
+        description: status of the order
       - name: return_flag
+        description: letter determining the status of the return 
       - name: line_number
+        description: sequence of the order items within the order 
       - name: order_item_status_code
+        description: status of the order item
       - name: ship_date
+        description: the date the order item is being shipped
       - name: commit_date
+        description: the date the order item is being commited
       - name: receipt_date
+        description: the receipt date of the order item
       - name: ship_mode
+        description: method of shipping
       - name: extended_price
+        description: line item price
       - name: quantity
+        description: total units
       - name: base_price
+        description: base price of item
       - name: discount_percentage
+        description: percentage of the discount
       - name: discounted_price
+        description: factoring in the discount_percentage, the line item discount total 
       - name: gross_item_sales_amount
+        description: line item price 
       - name: discounted_item_sales_amount
+        description: line item (includes quantity) discount amount
       - name: item_discount_amount
+        description: item level discount amount. this is always a negative number 
       - name: tax_rate
+        description: tax rate of the order item
       - name: item_tax_amount
+        description: item level tax total
       - name: net_item_sales_amount
-  
-  
-  
+        description: the net total which factors in discount and tax 
