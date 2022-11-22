@@ -5,38 +5,124 @@ sources:
     database: SNOWFLAKE_SAMPLE_DATA
     schema: TPCH_SF1
     tables:
-      - name: customer
-        columns:
-          - name: c_custkey
-            description: Unique key corresponding to each individual customer. Primary key of the customer source.
-            tests:
-              - unique
-              - not_null
-
-      - name: lineitem
-      - name: nation
-        columns:
-          - name: n_nationkey
-            tests:
-              - unique
-              - not_null
-      - name: region
-        columns:
-          - name: r_regionkey
-            tests:
-              - unique
-              - not_null
 
       - name: orders
+        description: main order tracking table
         columns:
           - name: o_orderkey
-            tests:
-              - unique              
-              - not_null
+            description: Primary key of the Orders table
+            tests: 
+              # this applies the tests unique and not_null to the o_orderkey colum 
+              - unique
+              - not_null     
+          - name: o_custkey
+            description: Foreign Key to C_CUSTKEY
+          - name: o_orderstatus
+            description: status code of the order
+          - name: o_totalprice
+            description: raw price
+          - name: o_orderdate
+            description: date the order was made
+          - name: o_orderpriority
+            description: code associated with the order
+          - name: o_clerk
+            description: id of the clerk
+          - name: o_shippriority
+            description: numeric representation of the shipping priority, zero being the default
         loaded_at_field: "o_orderdate::timestamp"
         freshness:
           warn_after: {count: 12, period: hour}
-          error_after: {count: 24, period: hour}
+          error_after: {count: 24, period: hour} 
+          
+      - name: customer
+        description: main customer table
+        columns:
+          - name: c_custkey
+            description: Primary Key of the Customer table
+            tests:
+              - unique:
+                  severity: warn
+              - not_null:
+                  severity: warn
+          - name: c_name
+            description: customer id
+          - name: c_address
+            description: address of the customer
+          - name: c_nationkey
+            description: foreign key to stg_nations
+          - name: c_phone
+            description: phone number of the customer
+          - name: c_acctbal
+            description: raw account balance 
+          - name: c_mktsegment
+            description: market segment of the customer
 
 
+      - name: lineitem
+        description: main lineitem table
+        columns:
+          - name: l_orderkey
+            description: Foreign Key to O_ORDERKEY
+          - name: l_partkey
+            description:  Foreign key to P_PARTKEY, first part of the compound Foreign Key to (PS_PARTKEY,PS_SUPPKEY) with L_SUPPKEY
+          - name: l_suppkey
+            description: Foreign key to S_SUPPKEY, second part of the compound Foreign Key to (PS_PARTKEY, PS_SUPPKEY) with L_PARTKEY
+          - name: l_linenumber
+            description: sequence of the order items within the order
+          - name: l_quantity
+            description: total units
+          - name: l_extendedprice
+            description: line item price
+          - name: l_discount
+            description: percentage of the discount
+          - name: l_tax
+            description: tax rate of the order item
+          - name: l_returnflag
+            description: letter determining the status of the return
+          - name: l_linestatus
+            description: status code of the order item
+          - name: l_shipdate
+            description: the date the order item is being shipped
+          - name: l_commitdate
+            description: the date the order item is being commited
+          - name: l_receiptdate
+            description: the receipt date of the order item
+          - name: l_shipinstruct
+            description: additional instructions on the shipment
+          - name: l_shipmode
+            description: method of shipping
 
+
+      - name: nation
+        description: nation mapping
+        columns:
+          - name: n_nationkey
+            description: Primary Key of the Nation table
+            tests:
+              - unique:
+                  severity: warn
+              - not_null:
+                  severity: warn
+          - name: n_name
+            description: nation name
+          - name: n_regionkey
+            description: Foreign Key to R_REGIONKEY
+
+
+      
+      
+      - name: region
+        description: region mapping
+        columns:
+          - name: r_regionkey
+            description: Primary Key of the Region table. 5 regions are populated
+            tests:
+              - unique:
+                  severity: warn
+              - not_null:
+                  severity: warn
+          - name: r_name
+            description: region name
+
+
+      
