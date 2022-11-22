@@ -5,83 +5,114 @@ models:
     description: staging layer for customers data
     columns:
       - name: customer_key
+        description: primary key of the model
         tests:
           - unique
           - not_null
       - name: name
+        description: customer id
       - name: address
+        description: address of the customer
       - name: nation_key
+        description: foreign key to stg__nations
       - name: phone_number
+        description: phone number of the customer
       - name: account_balance
+        description: total account balance from the customer
       - name: market_segment
-      - name: comment
+        description: market segment of the customer
+
 
   - name: stg_sample_data__line_items
+    description: staging layer for line items data
     columns:
       - name: order_key
-        tests:
-          - not_null
+        description: foreign key to stg__orders
       - name: part_key
+        description: foreign key to stg__part_suppliers
       - name: supplier_key
+        description: foreign key to stg__suppliers
       - name: line_number
+        description: sequence of the order items within the order
       - name: quantity
+        description: total units
       - name: extended_price
+        description: line item price
       - name: discount_percentage
+        description: percentage of the discount
       - name: tax_rate
+        description: tax rate of the order item
       - name: return_flag
+        description: letter determining the status of the return
       - name: status_code
+        description: status code of the order item
       - name: ship_date
+        description: the date the order item is being shipped 
       - name: commit_date
+        description: the date the order item is being commited
       - name: receipt_date
+        description: the receipt date of the order item
       - name: ship_instructions
+        description: additional instructions on the shipment
       - name: ship_mode
-      - name: comment
+        description: method of shipping
+  
 
   - name: stg_sample_data__nations
+    description: staging layer for nations data
     columns:
       - name: nation_key
+        description: primary key of the model
         tests:
           - unique
           - not_null
       - name: name
+        description: nation name
       - name: region_key
-      - name: comment
-             
+        description: foreign key to stg__regions
+        
  
   - name: stg_sample_data__orders
-
+    description: staging layer for orders data
     columns:
       - name: order_key
+        description: primary key of the model
         tests:
           - unique
           - not_null
       - name: customer_key
+        description: foreign key to stg__customers
       - name: status_code
         description: "{{ doc('status_code') }}"
       - name: total_price
+        description: raw price
       - name: order_date
+        description: date the order was made
       - name: priority_code
+        description: code associated with the order
         tests:
           - accepted_values:
               values: ['1-URGENT','2-HIGH','3-MEDIUM','4-NOT SPECIFIED', '5-LOW']
               severity: warn
       - name: clerk_name
+        description: id of the clerk
       - name: ship_priority
-      - name: comment
+        description: numeric representation of the shipping priority, zero being the default
 
-  
+
   - name: stg_sample_data__regions
     columns:
       - name: region_key
+        description: primary key of model
         tests:
           - unique
           - not_null
       - name: region_name
+        description: name of region
         tests:
           - accepted_values:
-              values: ['AFRICA','MIDDLE EAST','ASIA','AMERICA', 'EUROPE']
+              values: ['AFRICA','MIDDLE EAST','ASIA','AMERICA','EUROPE']
               severity: warn
-      - name: comment
 
 
   
