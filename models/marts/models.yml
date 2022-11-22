@@ -2,44 +2,67 @@ version: 2
 
 models:
   - name: dim_customers
+    description: Customer dimensions table
     columns:
       - name: customer_key
+        description: Primary key on the customers table
         tests:
           - unique
           - not_null
-      - name: region_name
+      - name: region
+        description: region name
         tests:
           - accepted_values:
-              values: ['AFRICA','MIDDLE EAST','ASIA','AMERICA', 'EUROPE']
+              values: ['AFRICA','MIDDLE EAST','ASIA','EUROPE','AMERICA']
               severity: warn
       - name: name
+        description: customer id
       - name: address
+        description: address of the customer
       - name: nation
+        description: nation name
       - name: phone_number
+        description: phone number of the customer
       - name: customer_account_balance
+        description: account balance of the customer
       - name: market_segment
+        description: market segment of the customer
+
+
  
  
   - name: fct_orders
+    description: orders fact table
     columns:
       - name: order_key
+        description: primary key of the model
         tests:
           - unique
           - not_null
       - name: customer_key
+        description: foreign key for customers
         tests:
           - relationships:
               to: ref('dim_customers')
               field: customer_key
               severity: error
       - name: order_date
+        description: date of the order
       - name: status_code
+        description: status of the order
       - name: priority_code
+        description: code associated with the order
       - name: clerk_name
-      - name: ship_priority  
-      - name: order_count   
-      - name: gross_item_sales_amount      
+        description: id of the clerk
+      - name: ship_priority
+        description: numeric representation of the shipping priority, zero being the default
+      - name: order_count
+        description: count of order
+      - name: gross_item_sales_amount
+        description: line item price
       - name: item_discount_amount
+        description: item level discount amount. this is always a negative number
       - name: item_tax_amount
+        description: item level tax total 
       - name: net_item_sales_amount
         description: the net total which factors in discount and tax  
